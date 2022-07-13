@@ -39,6 +39,14 @@ def print(students)
     students.each_with_index { |student, number| puts "#{number+1}. #{student[:name]} (#{student[:cohort]} cohort)" }
 end
 
+def specific_letter(students)
+  puts "Type the initial to search with:"
+  initial = gets.chomp
+  students_initials = students.select do 
+  |student|student[:name][0] == initial
+  end
+  puts students_initials
+end    
 def print_footer(students)
     puts "Overall, we have #{students.count} great students"
 end
@@ -47,3 +55,4 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+specific_letter(students)
