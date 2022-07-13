@@ -36,15 +36,16 @@ def print_header
 end
 
 def print(students)  
-  students.each_with_index { |student, number| puts "#{number+1}. #{student[:name]} (#{student[:cohort]} cohort)" }
+  count = 0
+  while count < students.size
+  puts "#{count+1}. #{students[count][:name]} (#{students[count][:cohort]} cohort)" 
+  count = count + 1
+  end
 end   
-
-def charecter_12(students)
-    students_list = students.select {|student|student[:name].size < 12}
-    
-    puts students_list
-end 
-   
+#def charecter_12(students)
+  #students_list = students.select {|student|student[:name].size < 12}
+  #puts students_list
+#end 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
@@ -53,4 +54,4 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
-charecter_12(students)
+#charecter_12(students)
