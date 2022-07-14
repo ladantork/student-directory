@@ -12,14 +12,12 @@
 # {name: "Norman Bates", cohort: :november}
 # ]
 def input_students
-  puts "Please enter the names of the students"
-  puts "Please enter contry you've been born "
-  puts "To finish, just hit return twice"
+  puts "Please enter the names of the students and the country you've been born"
+  puts "To finish, just hit return twice".center(60, "-")
   # create an emty array
   students = []
   # get the first name
-  name = gets.chomp
-  country = gets.chomp
+  name = gets.chomp && country = gets.chomp
   # while the name is not empty, reapeat this code
   while !name.empty? or !country.empty? do
     # add the student hash to the array
@@ -34,8 +32,8 @@ def input_students
 end
 
 def print_header
-  puts "The student of Villains Academy"
-  puts "------------"
+  puts "The student of Villains Academy".center(60, "-")
+
 end
 
 def print(students)  
