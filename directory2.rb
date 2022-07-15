@@ -18,19 +18,19 @@ def input_students
   students = []
   
   # get the first name
-  name = gets.chomp
+  name = gets.strip
   # while the name is not empty, reapeat this code
   while !name.empty?  do
     puts"please enter your country"
-    country = gets.chomp
+    country = gets.strip
     puts"please enter your cohort"
-    cohort = gets.chomp
+    cohort = gets.strip
     cohort_month= ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "unknown"]
     if cohort_month.include?(cohort)
       students << {name: name,cohort: cohort.to_sym,country: country}
     elsif !cohort_month.include?(cohort)
       puts " Try again"
-      cohort = gets.chomp
+      cohort = gets.strip
       if cohort_month.include?(cohort)
         students << {name: name,cohort: cohort.to_sym,country: country}
       else
@@ -39,7 +39,7 @@ def input_students
       end
      end
     # get another name from the user
-    name = gets.chomp
+    name = gets.strip
   end
     # return the array of students
     students   
