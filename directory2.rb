@@ -12,31 +12,35 @@
 # {name: "Norman Bates", cohort: :november}
 # ]
 def input_students
-  puts "Please enter the names of the students with their cohorth and the country they've been born"
+  puts "Please enter the names of the students "
   puts "To finish, just hit return twice".center(60, "-")
   # create an emty array
   students = []
   
   # get the first name
   name = gets.chomp
-  cohort = gets.chomp.to_s
-  country = gets.chomp
-  #cohort = gets.chomp.to_s(&:to_sym) 
-  #country = gets.chomp
   # while the name is not empty, reapeat this code
   while !name.empty?  do
-    if cohort.empty?
-    puts "No cohort has been given "
-    end
-    # add the student hash to the array
-    students << {name: name,cohort: cohort.to_sym,country: country}
-    puts "Now we have #{students.count} students"
+    puts"please enter your country"
+    country = gets.chomp
+    puts"please enter your cohort"
+    cohort = gets.chomp
+    cohort_month= ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "unknown"]
+    if cohort_month.include?(cohort)
+      students << {name: name,cohort: cohort.to_sym,country: country}
+    elsif !cohort_month.include?(cohort)
+      puts " Try again"
+      cohort = gets.chomp
+      if cohort_month.include?(cohort)
+        students << {name: name,cohort: cohort.to_sym,country: country}
+      else
+        students << {name: name,cohort: :unknown,country: country}
+        break
+      end
+     end
     # get another name from the user
     name = gets.chomp
-    cohort = gets.chomp
-    country = gets.chomp
-  
-end
+  end
     # return the array of students
     students   
 end
@@ -60,9 +64,26 @@ end
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
+
+def print_cohort(students)
+  cohort_month = []
+  students.map { |student| cohort_month << student[:cohort] }
+  clean_cohort = cohort_month.uniq
+  cohort_index = 0
+  while clean_cohort.length > cohort_index do
+    puts "#{clean_cohort[cohort_index].capitalize} cohort members:".center(60)
+    students.each do |student|
+    if student[:cohort] == clean_cohort[cohort_index]
+      puts student[:name].center(60)
+    end
+  end
+  cohort_index += 1
+  end
+end
 students = input_students
 # nothing happens untill we call the method
 print_header
 print(students)
 print_footer(students)
 #charecter_12(students)
+print_cohort(students)
