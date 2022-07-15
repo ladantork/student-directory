@@ -62,7 +62,11 @@ end
   #puts students_list
 #end 
 def print_footer(students)
+  if students.size > 1
   puts "Overall, we have #{students.count} great students"
+  else
+  puts "We have 1 great student"
+  end
 end
 
 def print_cohort(students)
