@@ -12,21 +12,31 @@
 # {name: "Norman Bates", cohort: :november}
 # ]
 def input_students
-  puts "Please enter the names of the students and the country you've been born"
+  puts "Please enter the names of the students with their cohorth and the country they've been born"
   puts "To finish, just hit return twice".center(60, "-")
   # create an emty array
   students = []
+  
   # get the first name
-  name = gets.chomp && country = gets.chomp
+  name = gets.chomp
+  cohort = gets.chomp.to_s
+  country = gets.chomp
+  #cohort = gets.chomp.to_s(&:to_sym) 
+  #country = gets.chomp
   # while the name is not empty, reapeat this code
-  while !name.empty? or !country.empty? do
+  while !name.empty?  do
+    if cohort.empty?
+    puts "No cohort has been given "
+    end
     # add the student hash to the array
-    students << {name: name,cohort: :november,country: country}
+    students << {name: name,cohort: cohort.to_sym,country: country}
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp  
+    name = gets.chomp
+    cohort = gets.chomp
     country = gets.chomp
-  end
+  
+end
     # return the array of students
     students   
 end
@@ -42,7 +52,7 @@ def print(students)
   puts "#{count+1}. #{students[count][:name]} (#{students[count][:cohort]} cohort) (#{students[count][:country]} contry)" 
   count = count + 1
   end
-end   
+end  
 #def charecter_12(students)
   #students_list = students.select {|student|student[:name].size < 12}
   #puts students_list
@@ -51,7 +61,7 @@ def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 students = input_students
-# nothing happens untill we cll the method
+# nothing happens untill we call the method
 print_header
 print(students)
 print_footer(students)
