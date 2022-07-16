@@ -1,22 +1,8 @@
-# students = [
-# name: "Dr. Hannibal Lecter", cohort: :november},
-# {name: "Darth Vader", cohort: :november},
-# {name: "Nurse Ratched", cohort: :november},
-# {name: "Michael Corleone", cohort: :november},
-# {name: "Alex Delarge", cohort: :november},
-# {name: "The Wicked Wich of the West", cohort: :november},
-# {name: "Terminator", cohort: :november},
-# {name: "Freddy Krueger", cohort: :november},
-# {name: "The Joker", cohort: :november},
-# {name: "Joffrey Baratheon", cohort: :november},
-# {name: "Norman Bates", cohort: :november}
-# ]
 def input_students
   puts "Please enter the names of the students "
   puts "To finish, just hit return twice".center(60, "-")
   # create an emty array
   students = []
-  
   # get the first name
   name = gets.strip
   # while the name is not empty, reapeat this code
@@ -52,20 +38,23 @@ end
 
 def print(students)  
   count = 0
-  while count < students.size
-  puts "#{count+1}. #{students[count][:name]} (#{students[count][:cohort]} cohort) (#{students[count][:country]} contry)" 
-  count = count + 1
+  if students.empty?
+    puts "Nothing to print"
+  else 
+    while count < students.size
+      puts "#{count+1}. #{students[count][:name]} (#{students[count][:cohort]} cohort) (#{students[count][:country]} contry)" 
+      count += 1
+    end
   end
-end  
-#def charecter_12(students)
-  #students_list = students.select {|student|student[:name].size < 12}
-  #puts students_list
-#end 
+end 
+
 def print_footer(students)
   if students.size > 1
-  puts "Overall, we have #{students.count} great students"
+    puts "Overall, we have #{students.count} great students"
+  elsif students.size == 0 
+    puts "No students"
   else
-  puts "We have 1 great student"
+    puts "We have 1 great student"
   end
 end
 
@@ -89,5 +78,4 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
-#charecter_12(students)
 print_cohort(students)
