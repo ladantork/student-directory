@@ -1,104 +1,63 @@
+@students = [] # an empty array accessible to all methods
 def input_students
   puts "Please enter the names of the students "
   puts "To finish, just hit return twice".center(60, "-")
-  # create an emty array
-  students = []
   # get the first name
   name = gets.strip
   # while the name is not empty, reapeat this code
   while !name.empty?  do
-    puts"please enter your country"
-    country = gets.strip
-    puts"please enter your cohort"
-    cohort = gets.strip
-    cohort_month= ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "unknown"]
-    if cohort_month.include?(cohort)
-      students << {name: name,cohort: cohort.to_sym,country: country}
-    elsif !cohort_month.include?(cohort)
-      puts " Try again"
-      cohort = gets.strip
-      if cohort_month.include?(cohort)
-        students << {name: name,cohort: cohort.to_sym,country: country}
-      else
-        students << {name: name,cohort: :unknown,country: country}
-        break
-      end
-     end
+    # add the student hash to the array
+    @students << {name: name,cohort: :november}
+    puts "Now we have #{@students.count} students"
     # get another name from the user
     name = gets.strip
+  end 
+end
+
+def interactive_menu 
+  loop do
+    print_menu
+    process(gets.chomp)
   end
-    # return the array of students
-    students   
+end
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I dont know what you meant,try again"  
+  end
 end
 
 def print_header
   puts "The student of Villains Academy".center(60, "-")
-
 end
 
-def print(students)  
-  count = 0
-  if students.empty?
-    puts "Nothing to print"
-  else 
-    while count < students.size
-      puts "#{count+1}. #{students[count][:name]} (#{students[count][:cohort]} cohort) (#{students[count][:country]} contry)" 
-      count += 1
-    end
+def print_students_list  
+  @students.each do |student|
+  puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end 
 
-def print_footer(students)
-  if students.size > 1
-    puts "Overall, we have #{students.count} great students"
-  elsif students.size == 0 
-    puts "No students"
-  else
-    puts "We have 1 great student"
-  end
-end
-
-def print_cohort(students)
-  cohort_month = []
-  students.map { |student| cohort_month << student[:cohort] }
-  clean_cohort = cohort_month.uniq
-  cohort_index = 0
-  while clean_cohort.length > cohort_index do
-    puts "#{clean_cohort[cohort_index].capitalize} cohort members:".center(60)
-    students.each do |student|
-    if student[:cohort] == clean_cohort[cohort_index]
-      puts student[:name].center(60)
-    end
-  end
-  cohort_index += 1
-  end
-end
-
-def interactive_menu
-  students = []  
-  loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    selection = gets.chomp
-  case selection
-    when "1"
-      students = input_students
-    when "2"
-      print_header
-      print(students)
-      print_footer(students)
-    when "9"
-      exit
-    else
-      puts "I dont know what you meant,try again"  
-    end
-  end
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 interactive_menu
-# students = input_students
-# nothing happens untill we call the method
-# print_header
-# print(students)
-# print_footer(students)
-# print_cohort(students)
+
