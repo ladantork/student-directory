@@ -10,14 +10,14 @@ def input_students
     cohort = STDIN.gets.strip
     cohort_month= ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "unknown"]
     if cohort_month.include?(cohort)
-      @students << {name: name,cohort: cohort.to_sym}
+      hash_students(name, cohort.to_sym)
     elsif !cohort_month.include?(cohort)
       puts " Try again"
       cohort = STDIN.gets.strip
     if cohort_month.include?(cohort)
-        @students << {name: name,cohort: cohort.to_sym}
+      hash_students(name, cohort.to_sym)
     else
-      @students << {name: name,cohort: :unknown}
+      hash_students(name, cohort.to_sym)
         break
     end
   end
@@ -67,9 +67,13 @@ def load_students (filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  hash_students(name, cohort.to_sym)
   end
   file.close
+end
+
+def hash_students (name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 def try_load_students
