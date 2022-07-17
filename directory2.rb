@@ -3,17 +3,17 @@ def input_students
   puts "Please enter the names of the students "
   puts "To finish, just hit return twice".center(60, "-")
   # get the first name
-  name = gets.strip
+  name = STDIN.gets.strip
   # while the name is not empty, reapeat this code
   while !name.empty?  do
     puts"please enter your cohort"
-    cohort = gets.strip
+    cohort = STDIN.gets.strip
     cohort_month= ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "unknown"]
     if cohort_month.include?(cohort)
       @students << {name: name,cohort: cohort.to_sym}
     elsif !cohort_month.include?(cohort)
       puts " Try again"
-      cohort = gets.strip
+      cohort = STDIN.gets.strip
     if cohort_month.include?(cohort)
         @students << {name: name,cohort: cohort.to_sym}
     else
@@ -26,14 +26,14 @@ def input_students
     puts "Now we have #{@students.count} students"
     
     # get another name from the user
-    name = gets.strip
+    name = STDIN.gets.strip
   end 
 end
 
 def interactive_menu 
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -63,13 +63,25 @@ def save_students
   file.close
 end
 
-def load_students
+def load_students (filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
+end
+
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exist?(filename) # if it exists
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
 end
 
 def process(selection)
@@ -102,6 +114,5 @@ end
 def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
+try_load_students
 interactive_menu
-
-
