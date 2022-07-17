@@ -6,9 +6,25 @@ def input_students
   name = gets.strip
   # while the name is not empty, reapeat this code
   while !name.empty?  do
+    puts"please enter your cohort"
+    cohort = gets.strip
+    cohort_month= ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december", "unknown"]
+    if cohort_month.include?(cohort)
+      @students << {name: name,cohort: cohort.to_sym}
+    elsif !cohort_month.include?(cohort)
+      puts " Try again"
+      cohort = gets.strip
+    if cohort_month.include?(cohort)
+        @students << {name: name,cohort: cohort.to_sym}
+    else
+      @students << {name: name,cohort: :unknown}
+        break
+    end
+  end
     # add the student hash to the array
-    @students << {name: name,cohort: :november}
+    #@students << {name: name,cohort: :cohort}
     puts "Now we have #{@students.count} students"
+    
     # get another name from the user
     name = gets.strip
   end 
@@ -25,6 +41,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -46,6 +63,15 @@ def save_students
   file.close
 end
 
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 def process(selection)
   case selection
   when "1"
@@ -54,6 +80,8 @@ def process(selection)
     show_students
   when "3"
     save_students
+  when "4"
+    load_students
   when "9"
     exit
   else
@@ -75,4 +103,5 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 interactive_menu
+
 
